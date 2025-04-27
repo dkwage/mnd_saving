@@ -1,3 +1,4 @@
+/* 기존 스타일 유지 */
 * {
   margin: 0;
   padding: 0;
@@ -77,10 +78,12 @@ button:hover {
   color: #2c3e50;
 }
 
+/* 테이블 스타일 */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  overflow-x: auto;
 }
 
 th,
@@ -101,4 +104,53 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #f1f1f1;
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* 모바일 친화적인 테이블 */
+@media (max-width: 768px) {
+  .result-container {
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap; /* 열이 줄바꿈되지 않도록 설정 */
+  }
+
+  th,
+  td {
+    font-size: 0.9rem; /* 글자 크기 축소 */
+    padding: 8px;
+  }
+
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: #2c3e50; /* 첫 번째 열 고정 */
+    color: #fff;
+  }
+
+  /* 특정 열 숨기기 (예: 비고 열) */
+  th:last-child,
+  td:last-child {
+    display: none; /* 비고 열 숨기기 */
+  }
+  p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #e74c3c;
+    font-weight: bold;
+  }
 }

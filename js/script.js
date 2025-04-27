@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const startDate = new Date(enlistedDate);
+    const startYear = startDate.getFullYear();
+
+    // 연도가 2024 이전이면 경고 메시지 표시
+    if (startYear < 2024) {
+      alert('입대일은 2024년 이후여야 합니다.');
+      return;
+    }
+    if (startYear > 2027) {
+      alert('입대일은 2027년 이전이어야 합니다.');
+      return;
+    }
     const tableContainer = document.getElementById('resultTableContainer');
     tableContainer.innerHTML = ''; // Clear previous table if any
 
@@ -136,6 +147,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (rank === '일병') salary = 900000;
             if (rank === '상병') salary = 1200000;
             if (rank === '병장') salary = 1500000;
+          } else if (year === 2026) {
+            if (rank === '이병') salary = 750000;
+            if (rank === '일병') salary = 900000;
+            if (rank === '상병') salary = 1200000;
+            if (rank === '병장') salary = 1500000;
+          } else if (year === 2027) {
+            if (rank === '이병') salary = 750000;
+            if (rank === '일병') salary = 900000;
+            if (rank === '상병') salary = 1200000;
+            if (rank === '병장') salary = 1500000;
           }
 
           if (rowIndex === 0) {
@@ -189,6 +210,10 @@ document.addEventListener('DOMContentLoaded', function () {
             deposit = 400000; // 월납입금 for 2024
           } else if (year === 2025) {
             deposit = 550000; // 월납입금 for 2025
+          } else if (year === 2026) {
+            deposit = 550000; // 월납입금 for 2026
+          } else if (year === 2027) {
+            deposit = 550000; // 월납입금 for 2027
           }
           tableData[rowIndex][colIndex] = deposit; // Store in tableData
           return deposit;
@@ -217,6 +242,10 @@ document.addEventListener('DOMContentLoaded', function () {
             necessities = 11550; // 병일회용품 for 2024
           } else if (year === 2025) {
             necessities = 7510; // 병일회용품 for 2025
+          } else if (year === 2026) {
+            necessities = 7510; // 병일회용품 for 2026
+          } else if (year === 2027) {
+            necessities = 7510; // 병일회용품 for 2027
           }
           tableData[rowIndex][colIndex] = necessities; // Store in tableData
           return necessities;
@@ -358,8 +387,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const resultContainer = document.getElementById('resultTableContainer');
       const summary = document.createElement('div');
       summary.innerHTML = `
-        <p><strong>원금:</strong> ${principal.toLocaleString()}원</p>
-        <p><strong>이익금:</strong> ${profit.toLocaleString()}원</p>
+        <p>월급 원금: ${principal.toLocaleString()}원</p>
+        <p>수익금: ${profit.toLocaleString()}원 <br/>(월납입금 + 공제 후 금액 +	병일회용품비 +	정부지원이자 +	은행 이자	+ 정부 매칭 지원금)</p>
       `;
       resultContainer.appendChild(summary);
     }
