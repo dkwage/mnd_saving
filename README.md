@@ -15,3 +15,9 @@
 <ul>
 <li>Initial Commit
 </ul>
+
+<h4>Ver1.0.1 - 04.28.25</h4>
+<ul>
+<li>SEO
+<li>년도 예외처리 추가
+</ul>
