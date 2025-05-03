@@ -114,6 +114,31 @@ p {
   font-weight: bold;
 }
 
+input[type='date']::before {
+  content: attr(data-placeholder);
+  width: 100%;
+}
+
+input[type='date']:focus::before,
+input[type='date']:valid::before {
+  display: none;
+}
+
+input {
+  /*ios대응*/
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  color: #333; /* 기본 텍스트 색상 */
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #333; /* 기본 텍스트 색상 */
+}
+
 /* 모바일 친화적인 테이블 */
 @media (max-width: 768px) {
   .result-container {

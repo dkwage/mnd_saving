@@ -21,3 +21,8 @@
 <li>SEO
 <li>년도 예외처리 추가
 </ul>
+
+<h4>Ver1.0.2 - 05.03.25</h4>
+<ul>
+<li>ios safari 대응 input, select css 수정
+</ul>
