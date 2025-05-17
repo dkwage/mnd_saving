@@ -1,47 +1,47 @@
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('button').addEventListener('click', function () {
-    const enlistedDate = document.getElementById('enlistedDate').value;
-    const enlistedType = document.getElementById('enlistedType').value;
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector("button").addEventListener("click", function () {
+    const enlistedDate = document.getElementById("enlistedDate").value;
+    const enlistedType = document.getElementById("enlistedType").value;
 
     if (!enlistedDate) {
-      alert('입대일을 선택해주세요.');
+      alert("입대일을 선택해주세요.");
       return;
     }
 
     const startDate = new Date(enlistedDate);
     const startYear = startDate.getFullYear();
 
-    // 연도가 2024 이전이면 경고 메시지 표시
-    if (startYear < 2024) {
-      alert('입대일은 2024년 이후여야 합니다.');
+    // 연도가 2022 이전이면 경고 메시지 표시
+    if (startYear < 2022) {
+      alert("입대일은 2022년 이후여야 합니다.");
       return;
     }
     if (startYear > 2027) {
-      alert('입대일은 2027년 이전이어야 합니다.');
+      alert("입대일은 2027년 이전이어야 합니다.");
       return;
     }
-    const tableContainer = document.getElementById('resultTableContainer');
-    tableContainer.innerHTML = ''; // Clear previous table if any
+    const tableContainer = document.getElementById("resultTableContainer");
+    tableContainer.innerHTML = ""; // Clear previous table if any
 
-    const table = document.createElement('table');
-    table.border = '1';
+    const table = document.createElement("table");
+    table.border = "1";
 
-    const headerRow = document.createElement('tr');
+    const headerRow = document.createElement("tr");
     const headers = [
-      '연번',
-      '계급',
-      '월급일',
-      '월급',
-      '월납입금',
-      '공제 후 금액',
-      '병일회용품비',
-      '정부지원이자',
-      '은행 이자',
-      '정부 매칭 지원금',
-      '비고',
+      "연번",
+      "계급",
+      "월급일",
+      "월급",
+      "월납입금",
+      "공제 후 금액",
+      "병일회용품비",
+      "정부지원이자",
+      "은행 이자",
+      "정부 매칭 지원금",
+      "비고",
     ];
     headers.forEach((headerText) => {
-      const th = document.createElement('th');
+      const th = document.createElement("th");
       th.textContent = headerText;
       headerRow.appendChild(th);
     });
@@ -61,25 +61,25 @@ document.addEventListener('DOMContentLoaded', function () {
           return rowIndex;
 
         case 1: // 계급
-          const select = document.createElement('select');
-          const ranks = ['이병', '일병', '상병', '병장'];
+          const select = document.createElement("select");
+          const ranks = ["이병", "일병", "상병", "병장"];
 
           // 연번에 따라 기본 계급 설정
           const serialNumber = rowIndex + 1; // 연번은 1부터 시작
-          let defaultRank = '이병'; // 기본값
+          let defaultRank = "이병"; // 기본값
           if (serialNumber >= 4 && serialNumber <= 9) {
-            defaultRank = '일병';
+            defaultRank = "일병";
           } else if (serialNumber >= 10 && serialNumber <= 15) {
-            defaultRank = '상병';
+            defaultRank = "상병";
           } else if (serialNumber >= 16) {
-            defaultRank = '병장';
+            defaultRank = "병장";
           }
 
           // 테이블 데이터에 저장된 값이 있으면 해당 값 사용, 없으면 기본값 사용
           const currentRank = tableData[rowIndex][colIndex] || defaultRank;
 
           ranks.forEach((rank) => {
-            const option = document.createElement('option');
+            const option = document.createElement("option");
             option.value = rank;
             option.textContent = rank;
 
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             select.appendChild(option);
           });
 
-          select.addEventListener('change', () => {
+          select.addEventListener("change", () => {
             tableData[rowIndex][colIndex] = select.value; // Update tableData on change
             updateTable(); // Recalculate dependent cells
           });
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         case 2: // 월급일
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 입대일을 그대로 사용
-            const dateString = startDate.toISOString().split('T')[0];
+            const dateString = startDate.toISOString().split("T")[0];
             tableData[rowIndex][colIndex] = dateString; // Store in tableData
             return dateString;
           } else if (rowIndex === tableData.length - 1) {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
               startDate.getMonth() + parseInt(enlistedType, 10)
             ); // 복무 기간 추가
             dischargeDate.setDate(dischargeDate.getDate() - 1); // 하루 빼기
-            const dateString = dischargeDate.toISOString().split('T')[0];
+            const dateString = dischargeDate.toISOString().split("T")[0];
             tableData[rowIndex][colIndex] = dateString; // Store in tableData
             return dateString;
           } else {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const promotionDate = new Date(startDate);
             promotionDate.setMonth(startDate.getMonth() + rowIndex);
             promotionDate.setDate(10); // Set to the 10th day of the month
-            const dateString = promotionDate.toISOString().split('T')[0];
+            const dateString = promotionDate.toISOString().split("T")[0];
             tableData[rowIndex][colIndex] = dateString; // Store in tableData
             return dateString;
           }
@@ -138,25 +138,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
           // 월급 계산 (기존 로직)
           if (year === 2024) {
-            if (rank === '이병') salary = 640000;
-            if (rank === '일병') salary = 800000;
-            if (rank === '상병') salary = 1000000;
-            if (rank === '병장') salary = 1250000;
+            if (rank === "이병") salary = 640000;
+            if (rank === "일병") salary = 800000;
+            if (rank === "상병") salary = 1000000;
+            if (rank === "병장") salary = 1250000;
           } else if (year === 2025) {
-            if (rank === '이병') salary = 750000;
-            if (rank === '일병') salary = 900000;
-            if (rank === '상병') salary = 1200000;
-            if (rank === '병장') salary = 1500000;
+            if (rank === "이병") salary = 750000;
+            if (rank === "일병") salary = 900000;
+            if (rank === "상병") salary = 1200000;
+            if (rank === "병장") salary = 1500000;
           } else if (year === 2026) {
-            if (rank === '이병') salary = 750000;
-            if (rank === '일병') salary = 900000;
-            if (rank === '상병') salary = 1200000;
-            if (rank === '병장') salary = 1500000;
+            if (rank === "이병") salary = 750000;
+            if (rank === "일병") salary = 900000;
+            if (rank === "상병") salary = 1200000;
+            if (rank === "병장") salary = 1500000;
           } else if (year === 2027) {
-            if (rank === '이병') salary = 750000;
-            if (rank === '일병') salary = 900000;
-            if (rank === '상병') salary = 1200000;
-            if (rank === '병장') salary = 1500000;
+            if (rank === "이병") salary = 750000;
+            if (rank === "일병") salary = 900000;
+            if (rank === "상병") salary = 1200000;
+            if (rank === "병장") salary = 1500000;
+          } else if (year === 2023) {
+            if (rank === "이병") salary = 600000;
+            if (rank === "일병") salary = 680000;
+            if (rank === "상병") salary = 800000;
+            if (rank === "병장") salary = 1000000;
+          } else if (year === 2022) {
+            if (rank === "이병") salary = 510100;
+            if (rank === "일병") salary = 552100;
+            if (rank === "상병") salary = 610200;
+            if (rank === "병장") salary = 676100;
           }
 
           if (rowIndex === 0) {
@@ -198,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 빈 값 반환
             tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            return ""; // Return empty string for display
           }
 
           salaryDate = tableData[rowIndex][2]; // Get 월급일 (C1)
@@ -214,7 +224,12 @@ document.addEventListener('DOMContentLoaded', function () {
             deposit = 550000; // 월납입금 for 2026
           } else if (year === 2027) {
             deposit = 550000; // 월납입금 for 2027
+          } else if (year === 2023) {
+            deposit = 400000; // 월납입금 for 2023
+          } else if (year === 2022) {
+            deposit = 400000; // 월납입금 for 2022
           }
+
           tableData[rowIndex][colIndex] = deposit; // Store in tableData
           return deposit;
 
@@ -222,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 빈 값 반환
             tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            return ""; // Return empty string for display
           }
           const salary1 = tableData[rowIndex][3] || 0; // Get 월급 (D1), 기본값 0
           const deposit1 = tableData[rowIndex][4] || 0; // Get 월납입금 (E1), 기본값 0
@@ -231,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 빈 값 반환
             tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            return ""; // Return empty string for display
           }
           salaryDate = tableData[rowIndex][2]; // Get 월급일 (C1)
           if (!salaryDate) return 0; // 월급일이 없으면 0 반환
@@ -254,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 빈 값 반환
             tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            return ""; // Return empty string for display
           }
 
           const deposit2 = tableData[rowIndex][4] || 0; // Get 월납입금 (E1), 기본값 0
@@ -280,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (rowIndex === 0) {
             // 첫 번째 행의 경우 빈 값 반환
             tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            return ""; // Return empty string for display
           }
 
           const deposit3 = tableData[rowIndex][4] || 0; // Get 월납입금 (E1), 기본값 0
@@ -304,9 +319,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         case 9: // 정부 매칭 지원금
           if (rowIndex === 0) {
-            // 첫 번째 행의 경우 빈 값 반환
-            tableData[rowIndex][colIndex] = null; // Store empty value in tableData
-            return ''; // Return empty string for display
+            tableData[rowIndex][colIndex] = null;
+            return "";
           }
 
           // Ensure case 4 is calculated
@@ -314,31 +328,40 @@ document.addEventListener('DOMContentLoaded', function () {
             tableData[rowIndex][4] === null ||
             tableData[rowIndex][4] === undefined
           ) {
-            tableData[rowIndex][4] = generateColumnData(rowIndex, 4); // Calculate case 5 value
+            tableData[rowIndex][4] = generateColumnData(rowIndex, 4);
           }
 
-          const matchingSupport = tableData[rowIndex][4] || 0; // Get case 4, 기본값 0
-          tableData[rowIndex][colIndex] = matchingSupport; // Store in tableData
-          return matchingSupport; // Return the value
+          const depositForMatching = tableData[rowIndex][4] || 0;
+          let matchingRate = 1; // 기본 100%
+          const salaryDateForMatching = tableData[rowIndex][2];
+          if (salaryDateForMatching) {
+            const matchingYear = new Date(salaryDateForMatching).getFullYear();
+            if (matchingYear === 2023) matchingRate = 0.71;
+            else if (matchingYear === 2022) matchingRate = 0.33;
+            // 2024~2027은 1(100%) 유지
+          }
+          const matchingSupport = Math.round(depositForMatching * matchingRate);
+          tableData[rowIndex][colIndex] = matchingSupport;
+          return matchingSupport;
         default:
-          return '';
+          return "";
       }
     }
 
     function updateTable() {
       // Clear and regenerate the table
-      table.innerHTML = '';
+      table.innerHTML = "";
       table.appendChild(headerRow);
 
       const totals = Array(headers.length).fill(0); // Reset totals
 
       for (let i = 0; i < tableData.length; i++) {
-        const dataRow = document.createElement('tr');
+        const dataRow = document.createElement("tr");
         for (let j = 0; j < headers.length; j++) {
-          const dataCell = document.createElement('td');
+          const dataCell = document.createElement("td");
           const cellContent = generateColumnData(i, j);
 
-          if (typeof cellContent === 'number') {
+          if (typeof cellContent === "number") {
             if (j === 0) {
               // 1열(연번)에는 "원"을 붙이지 않음
               dataCell.textContent = cellContent.toLocaleString();
@@ -358,15 +381,15 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // Add totals row
-      const totalsRow = document.createElement('tr');
+      const totalsRow = document.createElement("tr");
       for (let j = 0; j < headers.length; j++) {
-        const totalsCell = document.createElement('td');
+        const totalsCell = document.createElement("td");
         if (j === 0) {
-          totalsCell.textContent = '총계'; // 첫 번째 열에 "총계" 표시
+          totalsCell.textContent = "총계"; // 첫 번째 열에 "총계" 표시
         } else if (j === 1 || j === 2 || j === 10) {
           // case 1, 2, 10에는 총계 출력하지 않음
-          totalsCell.textContent = ''; // Leave empty
-        } else if (typeof totals[j] === 'number') {
+          totalsCell.textContent = ""; // Leave empty
+        } else if (typeof totals[j] === "number") {
           totalsCell.textContent = `${totals[j].toLocaleString()}원`;
         }
         totalsRow.appendChild(totalsCell);
@@ -384,8 +407,8 @@ document.addEventListener('DOMContentLoaded', function () {
         totals[9 || 0]; // case 4~9 총계
 
       // Add 원금과 이익금 to the result container
-      const resultContainer = document.getElementById('resultTableContainer');
-      const summary = document.createElement('div');
+      const resultContainer = document.getElementById("resultTableContainer");
+      const summary = document.createElement("div");
       summary.innerHTML = `
         <p>월급 원금: ${principal.toLocaleString()}원</p>
         <p>수익금: ${profit.toLocaleString()}원 <br/>(월납입금 + 공제 후 금액 +	병일회용품비 +	정부지원이자 +	은행 이자	+ 정부 매칭 지원금)</p>
