@@ -30,4 +30,5 @@
 <h4>Ver1.0.3 - 05.17.25</h4>
 <ul>
 <li>2022 ~ 2027 대응 업데이트
+<li>input, select font-family 적용
 </ul>
